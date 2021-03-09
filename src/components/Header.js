@@ -14,7 +14,16 @@ const Header = ({ addTask }) => {
 
   const saveTask = (e) => {
     e.preventDefault()
-    const time = `${hour}:${minute} ${day}`
+    let formatedMinutes
+
+    if (minute.length > 1) {
+      formatedMinutes = minute
+    } else {
+      formatedMinutes = `0${minute}`
+    }
+
+    const time = `${hour}:${formatedMinutes} ${day}`
+
     addTask(task, time)
     setShow(false)
   }
