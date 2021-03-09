@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import Header from './components/Header'
+import { Container, Row, Col } from 'react-bootstrap'
+import ListItems from './components/ListItems'
+import { v4 as uuidv4 } from 'uuid'
 
 function App() {
+  const [data, setData] = useState([
+    {
+      id: uuidv4(),
+      isCheck: false,
+      task: 'Lunch with girl friend',
+      time: '8:00PM',
+    },
+    {
+      id: uuidv4(),
+      isCheck: false,
+      task: 'Go shopping with girl friend',
+      time: '7:00PM',
+    },
+    {
+      id: uuidv4(),
+      isCheck: true,
+      task: 'Go pick girl friend',
+      time: '6:00PM',
+    },
+  ])
+
+  const addTask = (myTask, time) => {
+    const task = {
+      id: uuidv4(),
+      isCheck: false,
+      task: myTask,
+      time,
+    }
+    setData([task, ...data])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container>
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <Header addTask={addTask} />
+          {data ? <ListItems data={data} /> : 'Loading...'}
+        </Col>
+      </Row>
+    </Container>
+  )
 }
 
-export default App;
+export default App
